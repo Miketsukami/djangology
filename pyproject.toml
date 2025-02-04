@@ -1,0 +1,36 @@
+[project]
+name = "djangology"
+description = "Separate business logic from infrastructure"
+version = "0.1.0"
+
+authors = [
+    { name = "Artem Suhanov", email = "miketsukami@outlook.com" },
+]
+
+readme = "README.md"
+license = { file = "LICENSE" }
+
+requires-python = ">=3.10"
+
+dependencies = [
+    "django>=5.1.5",
+]
+
+[dependency-groups]
+linting = [
+    "ruff>=0.9.4",
+]
+testing = [
+    "freezegun>=1.5.1",
+    "pytest>=8.3.4",
+    "pytest-cases>=3.8.6",
+    "pytest-coverage>=0.0",
+    "pytest-django>=4.9.0",
+    "pytest-factoryboy>=2.7.0",
+    "pytest-unordered>=0.6.1",
+]
+
+[tool.pytest.ini_options]
+django_find_project = false
+pythonpath = ["."]
+DJANGO_SETTINGS_MODULE = "tests.dummy.settings"
