@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import abc
 import typing
+from contextlib import AbstractContextManager
+from types import TracebackType
 
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
@@ -11,7 +13,8 @@ from .exceptions import ObjectNotFoundError, ObjectNotUniqueError
 from .types import TModel
 
 
-class BaseModelSelection(typing.Generic[TModel], abc.ABC):
+class BaseModelSelection(typing.Generic[TModel], AbstractContextManager, abc.ABC):
+
     model: type[TModel]
 
     def __init__(self, queryset: QuerySet[TModel] | None = None) -> None:
@@ -20,10 +23,9 @@ class BaseModelSelection(typing.Generic[TModel], abc.ABC):
 
         self.queryset = queryset
 
-    def __enter__(self) -> typing.Self:
-        return self
-
-    def __exit__(self, exc_type: typing.Any, exc_val: typing.Any, exc_tb: typing.Any) -> None:
+    def __exit__(
+        self, exc_type: type[BaseException], exc_value: BaseException | None, traceback: TracebackType | None
+    ) -> None:
         pass
 
     @property
