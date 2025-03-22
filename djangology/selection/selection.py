@@ -32,6 +32,11 @@ class BaseModelSelection(typing.Generic[TModel], AbstractContextManager, abc.ABC
     def pks(self) -> list[typing.Any]:
         return list(self.queryset.values_list('pk', flat=True))
 
+    def order_by(self, *lookups: str) -> typing.Self:
+        self.queryset = self.queryset.order_by(*lookups)
+
+        return self
+
     def get_object(self, *, raise_exception: bool = True, **params: typing.Any) -> TModel | None:
         try:
             return self.queryset.get(**params)
