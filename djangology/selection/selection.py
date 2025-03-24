@@ -14,8 +14,8 @@ from .types import TModel
 
 
 class BaseModelSelection(typing.Generic[TModel], AbstractContextManager, abc.ABC):
-
     model: type[TModel]
+    queryset: QuerySet[TModel]
 
     def __init__(self, queryset: QuerySet[TModel] | None = None) -> None:
         if queryset is None:
